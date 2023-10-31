@@ -102,9 +102,7 @@ class FileStorage:
                 return 0
 
             c = len([o for o in self.__objects.values() if isinstance(o, cls)])
-            print(f"Count for {cls.__name__}: {count}")
             return c
         else:
             c = len(self.__objects)
-            print(f"Total count: {count}")
             return c

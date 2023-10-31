@@ -29,11 +29,10 @@ def stats():
         "State": "states",
         "User": "users"
     }
-    
     stats = {cls: storage.count(c) for c, cls in classes.items()}
     # Convert the dictionary to a formatted JSON string
     json_stats = json.dumps(stats, indent=2)
     # Add new lines between each key-value pair
     formatted_stats = "\n".join(json_stats.splitlines())
-    
+
     return formatted_stats, 200, {'Content-Type': 'application/json'}

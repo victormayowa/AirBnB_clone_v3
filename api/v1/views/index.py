@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# api/v1/views/index.py
+''' the index for app_view'''
 import json
 from flask import jsonify, make_response
 from api.v1.views import app_views

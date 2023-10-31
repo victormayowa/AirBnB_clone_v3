@@ -92,7 +92,18 @@ class FileStorage:
             The number of objects in storage matching the given class.
             If no class is passed, returns the count of all objects in storage.
         """
-        if cls:
-            return len([obj for obj in self.__objects.values() if isinstance(obj, cls)])
+        if cls is not None:
+            if isinstance(cls, str):
+                cls = classes.get(cls)
+
+            if not isinstance(cls, type):
+                print(f"Invalid class: {cls}")
+                return 0
+
+            count = len([obj for obj in self.__objects.values() if isinstance(obj, cls)])
+            print(f"Count for {cls.__name__}: {count}")
+            return count
         else:
-            return len(self.__objects)
+            count = len(self.__objects)
+            print(f"Total count: {count}")
+            return count

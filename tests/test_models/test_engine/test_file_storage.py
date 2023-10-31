@@ -77,10 +77,34 @@ class TestFileStorage(unittest.TestCase):
         new_dict = storage.all()
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
+    
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self) -> None:
+        """Tests count"""
+        storage = FileStorage()
+        obs = [User(), User(), City(), Place()]
+        for ob in obs:
+            ob.save()
+        self.assertEqual(storage.count(User), 2)
+        self.assertEqual(storage.count(City), 1)
+        self.assertEqual(storage.count(Place), 1)
+        self.assertEqual(storage.count(Amenity), 0)
+        self.assertEqual(storage.count(), 4)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self) -> None:
+        """Tests get"""
+        storage = FileStorage()
+        user = User()
+        user.save()
+        place = Place()
+        place.save()
+        self.assertIs(user, storage.get(User, user.id))
+        self.assertIs(place, storage.get(Place, place.id))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """test that new adds an object to the FileStorage.__objects attr"""
+        """Test new adds to FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}

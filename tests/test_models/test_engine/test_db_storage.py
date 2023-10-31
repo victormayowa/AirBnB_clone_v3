@@ -97,8 +97,8 @@ class TestDBStorage(unittest.TestCase):
     def test_count(self) -> None:
         """Tests count method"""
         obs = [User(password="pwd1", email="one@mail.com"),
-                    User(password='pwd2', email="two@mail.com"),
-                    Amenity(name="WiFi")]
+               User(password='pwd2', email="two@mail.com"),
+               Amenity(name="WiFi")]
         for ob in obs:
             self.storage.new(ob)
         self.assertEqual(self.storage.count(User), 2)

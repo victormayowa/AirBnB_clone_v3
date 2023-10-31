@@ -68,6 +68,7 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
     def get(self, cls, id):
         """
         Retrieves one object
@@ -100,10 +101,10 @@ class FileStorage:
                 print(f"Invalid class: {cls}")
                 return 0
 
-            count = len([obj for obj in self.__objects.values() if isinstance(obj, cls)])
+            c = len([o for o in self.__objects.values() if isinstance(o, cls)])
             print(f"Count for {cls.__name__}: {count}")
-            return count
+            return c
         else:
-            count = len(self.__objects)
+            c = len(self.__objects)
             print(f"Total count: {count}")
-            return count
+            return c

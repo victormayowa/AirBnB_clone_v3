@@ -20,7 +20,7 @@ def get_cty_places(city_id):
     if not c:
         abort(404)
     city_p = [p.to_dict() for p in storage.all(Place).values()
-                   if p.city_id == city_id]
+              if p.city_id == city_id]
     return jsonify(city_p)
 
 
@@ -113,7 +113,7 @@ def search_place():
         amenities = {storage.get(Amenity, amenity_id)
                      for amenity_id in amenities}
         m = {p for p in m
-                 if amenities.intersection(set(p.amenities)) == amenities}
+             if amenities.intersection(set(p.amenities)) == amenities}
 
     final_m = []
     for p in m:

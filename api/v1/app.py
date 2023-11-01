@@ -10,8 +10,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
+host = os.getenv("HBNB_API_HOST", "0.0.0.0")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-CORS(app, resources={'/*': {'origins': app_host}})
+CORS(app, resources={'/*': {'origins': host}})
 
 
 @app.teardown_appcontext

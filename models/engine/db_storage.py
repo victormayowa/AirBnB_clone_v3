@@ -23,6 +23,7 @@ classes = {"Amenity": Amenity, "City": City,
 class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
+    __sessionmaker = None
     __session = None
 
     def __init__(self):
@@ -57,7 +58,10 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
-        self.__session.commit()
+        try:
+            self.__session.commit()
+        except Exception:
+            self.__session.rollback()
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
@@ -68,12 +72,13 @@ class DBStorage:
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__sessionmaker = scoped_session(sess_factory)
+        self.__session = self.__sessionmaker()
 
     def close(self):
         """call remove() method on the private session attribute"""
-        self.__session.remove(i)
+        self.__session.close()
+        self.__session = self.__sessionmaker()
 
     def get(self, cls, id):
         """

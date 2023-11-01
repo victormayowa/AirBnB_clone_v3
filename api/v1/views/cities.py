@@ -6,6 +6,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from flask import jsonify, request
+from api.v1.views import app_views
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 from flask import jsonify, request
 

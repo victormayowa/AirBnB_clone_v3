@@ -21,18 +21,14 @@ def status():
 @app_views.route('/stats')
 def stats():
     """Retrieves the number of each object type."""
-    classes = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
+    obj = {
+        'amenities': Amenity,
+        'cities': City,
+        'places': Place,
+        'reviews': Review,
+        'states': State,
+        'users': User
     }
-    stats = {cls: storage.count(c) for c, cls in classes.items()}
-    # Convert the dictionary to a formatted JSON string
-    json_stats = json.dumps(stats, indent=2)
-    # Add new lines between each key-value pair
-    formatted_stats = "\n".join(json_stats.splitlines())
-
-    return formatted_stats, 200, {'Content-Type': 'application/json'}
+    for k, v in obj.items():
+        obj[k] = storage.count(v)
+    return jsonify(obj)
